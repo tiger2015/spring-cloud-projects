@@ -11,4 +11,4 @@ eureka:
       defaultZone: http://127.0.0.1:8080/eureka/
 spring:
   application:
-    name: eureka-server2
+    name: eureka-server
