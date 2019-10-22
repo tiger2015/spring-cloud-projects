@@ -1,0 +1,8 @@
+server:
+  servlet:
+    context-path: /
+  port: 8084
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.100.101:8080/eureka/,http://192.168.100.102:8080/eureka/

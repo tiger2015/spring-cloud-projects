@@ -10,7 +10,8 @@
     <version>1.0</version>
     <modules>
         <module>eureka-server</module>
-        <module>eureka-client</module>
+        <module>service-provider</module>
+        <module>service-consumer</module>
     </modules>
 
     <name>spring-cloud-projects</name>
@@ -81,7 +82,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
 
     </build>
