@@ -4,6 +4,7 @@ server:
 eureka:
   instance:
     hostname: 127.0.0.1
+    prefer-ip-address: false
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -12,3 +13,5 @@ eureka:
 spring:
   application:
     name: eureka-server
+logging:
+  config: ./config/log4j2.xml
