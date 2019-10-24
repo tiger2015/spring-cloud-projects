@@ -4,7 +4,7 @@ server:
 eureka:
   instance:
     hostname: 127.0.0.1
-    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -13,3 +13,5 @@ eureka:
 spring:
   application:
     name: eureka-server
+logging:
+  config: classpath:log4j2.xml
