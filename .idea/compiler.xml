@@ -7,15 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="config-server" />
         <module name="eureka-client" />
         <module name="eureka-server" />
+        <module name="service-consumer" />
+        <module name="service-provider" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="config-server" options="-parameters" />
       <module name="eureka-client" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="service-consumer" options="-parameters" />
+      <module name="service-provider" options="-parameters" />
       <module name="spring-cloud-projects" options="-parameters" />
     </option>
   </component>
