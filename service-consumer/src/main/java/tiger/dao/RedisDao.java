@@ -8,4 +8,7 @@ public interface RedisDao<K, V, HK, HV> {
 
     boolean hmset(K key, Map<HK, HV> values);
 
+    V get(K key);
+
+
 }

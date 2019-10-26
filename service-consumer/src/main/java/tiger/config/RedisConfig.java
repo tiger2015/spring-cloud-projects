@@ -11,6 +11,7 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
@@ -33,6 +34,18 @@ public class RedisConfig {
     private int minIdle;
     @Value("${redis.pool.maxWaitMills}")
     private long maxWaitMills;
+
+    @Value("${redis.key.serializer:org.springframework.data.redis.serializer.StringRedisSerializer}")
+    private String redisKeySerializer;
+    @Value("${redis.value.serializer}")
+    private String redisValueSerializer;
+    @Value("${redis.hash.key.serializer:org.springframework.data.redis.serializer.StringRedisSerializer}")
+    private String redisHashKeySerializer;
+    @Value("${redis.hash.value.serializer}")
+    private String redisHashValueSerializer;
+
+
+
 
     private RedisStandaloneConfiguration redisStandaloneConfiguration() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
@@ -62,13 +75,17 @@ public class RedisConfig {
 
 
     @Bean
-    public RedisTemplate redisTemplate() {
+    public RedisTemplate redisTemplate() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         RedisTemplate redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(connectionFactory());
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+        redisTemplate.setKeySerializer((RedisSerializer<?>) Class.forName(redisKeySerializer).newInstance());
+        if(redisValueSerializer != null){
+            redisTemplate.setValueSerializer((RedisSerializer<?>) Class.forName(redisValueSerializer).newInstance());
+        }
+        redisTemplate.setHashKeySerializer((RedisSerializer<?>) Class.forName(redisHashKeySerializer).newInstance());
+        if(redisHashValueSerializer!=null){
+            redisTemplate.setHashValueSerializer((RedisSerializer<?>) Class.forName(redisHashValueSerializer).newInstance());
+        }
         redisTemplate.afterPropertiesSet();
         log.info("create redisTemplate");
         return redisTemplate;

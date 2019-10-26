@@ -4,12 +4,17 @@ server:
 eureka:
   instance:
     hostname: 127.0.0.1
-    prefer-ip-address: false
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 3
+    lease-expiration-duration-in-seconds: 10
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8080/eureka/
+  server:
+    enable-self-preservation: true  # 对否启动保护机制
+    eviction-interval-timer-in-ms: 3000 # 清理时间间隔
 spring:
   application:
     name: eureka-server

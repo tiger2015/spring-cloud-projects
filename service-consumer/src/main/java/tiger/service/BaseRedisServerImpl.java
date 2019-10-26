@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tiger.dao.RedisDao;
 
+import java.util.Map;
+
 @Service
-public class RedisServerImpl<K, V, HK, HV> implements RedisService<K, V, HK, HV> {
+public class BaseRedisServerImpl<K, V, HK, HV> implements BaseRedisService<K, V, HK, HV> {
     @Autowired
     private RedisDao<K, V, HK, HV> redisDao;
 
@@ -14,4 +16,17 @@ public class RedisServerImpl<K, V, HK, HV> implements RedisService<K, V, HK, HV>
         redisDao.set(key, value);
         return false;
     }
+
+    @Override
+    public boolean saveHash(K key, Map<HK, HV> map) {
+        redisDao.hmset(key, map);
+        return false;
+    }
+
+    @Override
+    public V get(K key) {
+        return redisDao.get(key);
+    }
+
+
 }

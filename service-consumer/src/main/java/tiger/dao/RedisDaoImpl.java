@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Repository
 @Slf4j
-public class RedisDaoImpl<K, V, HK, HV> implements RedisDao<K, V, HK, HV> {
+public class RedisDaoImpl<K, V, HK, HV> implements RedisDao<K, V , HK, HV> {
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -31,5 +31,10 @@ public class RedisDaoImpl<K, V, HK, HV> implements RedisDao<K, V, HK, HV> {
     public boolean hmset(K key, Map<HK, HV> values) {
         redisTemplate.opsForHash().putAll(key, values);
         return false;
+    }
+
+    @Override
+    public V get(K key) {
+        return (V) redisTemplate.opsForValue().get(key);
     }
 }
