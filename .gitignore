@@ -5,6 +5,7 @@
 # IntelliJ project files
 .idea
 *.iml
+.idea/**/*.xml
 out
 gen
 ### JetBrains template
