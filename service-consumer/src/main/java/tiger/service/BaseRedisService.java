@@ -9,4 +9,7 @@ public interface BaseRedisService<K, V, HK, HV> {
     boolean saveHash(K key, Map<HK, HV> map);
 
     V get(K key);
+
+    long incrAndGet(K key);
+
 }

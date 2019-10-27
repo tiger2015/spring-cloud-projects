@@ -2,7 +2,6 @@ package tiger.dao;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +9,7 @@ import java.util.Map;
 
 @Repository
 @Slf4j
-public class RedisDaoImpl<K, V, HK, HV> implements RedisDao<K, V , HK, HV> {
+public class RedisDaoImpl<K, V, HK, HV> implements RedisDao<K, V, HK, HV> {
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -24,7 +23,6 @@ public class RedisDaoImpl<K, V, HK, HV> implements RedisDao<K, V , HK, HV> {
             return false;
         }
         return true;
-
     }
 
     @Override
@@ -34,7 +32,14 @@ public class RedisDaoImpl<K, V, HK, HV> implements RedisDao<K, V , HK, HV> {
     }
 
     @Override
+    public long incr(K key) {
+        return redisTemplate.opsForValue().increment(key);
+    }
+
+    @Override
     public V get(K key) {
         return (V) redisTemplate.opsForValue().get(key);
     }
+
+
 }

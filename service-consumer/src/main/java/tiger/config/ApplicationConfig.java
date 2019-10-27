@@ -11,6 +11,8 @@ import java.time.Duration;
 @Configuration
 public class ApplicationConfig {
 
+    public static final String USER_ID="user_id";
+
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {

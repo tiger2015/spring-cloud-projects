@@ -22,14 +22,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/save")
+    @RequestMapping("/add")
     public void save(@RequestParam("name") String name) {
         User user = new User();
-        user.setId(String.valueOf(index.getAndIncrement()));
         user.setName(name);
         userService.addUser(user);
     }
-
     @RequestMapping("/get/{id}")
     @ResponseBody
     public User get(@PathVariable("id") String id) {

@@ -28,5 +28,8 @@ public class BaseRedisServerImpl<K, V, HK, HV> implements BaseRedisService<K, V,
         return redisDao.get(key);
     }
 
-
+    @Override
+    public long incrAndGet(K key) {
+        return redisDao.incr(key);
+    }
 }
