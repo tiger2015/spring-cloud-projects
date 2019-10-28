@@ -120,3 +120,4 @@ hs_err_pid*
 /.idea/GrepConsole.xml
 /.idea/misc.xml
 /.idea/
+!/.idea/encodings.xml
