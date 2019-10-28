@@ -19,4 +19,4 @@ spring:
   application:
     name: eureka-server
 logging:
-  config: ./config/log4j2.xml
+  config: classpahth:log4j2.xml

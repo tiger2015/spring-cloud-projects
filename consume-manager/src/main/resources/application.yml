@@ -1,0 +1,9 @@
+server:
+  port: 8088
+
+logging:
+  config: classpath:log4j2.xml
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html

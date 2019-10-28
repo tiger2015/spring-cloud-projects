@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <!-- 配置日志文件输出目录 -->
+        <Property name="log_dir">./logs</Property>
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+        <RollingFile name="infoRollingFile" fileName="${log_dir}/info.log" filePattern="${log_dir}/info-%d{yyyy-MM-dd HH}.zip">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <Filters>
+                <!-- 此Filter意思是，只输出TRACE级别的数据 DENY，日志将立即被抛弃不再经过其他过滤器； NEUTRAL，有序列表里的下个过滤器过接着处理日志；
+                    ACCEPT，日志会被立即处理，不再经过剩余过滤器。 -->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="warnRollingFile" fileName="${log_dir}/warn.log" filePattern="${log_dir}/warn-%d{yyyy-MM-dd HH}.zip">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <Filters>
+                <!-- 此Filter意思是，只输出TRACE级别的数据 DENY，日志将立即被抛弃不再经过其他过滤器； NEUTRAL，有序列表里的下个过滤器过接着处理日志；
+                    ACCEPT，日志会被立即处理，不再经过剩余过滤器。 -->
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="errorRollingFile" fileName="${log_dir}/error.log" filePattern="${log_dir}/error-%d{yyyy-MM-dd HH}.zip">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <Filters>
+                <!-- 此Filter意思是，只输出TRACE级别的数据 DENY，日志将立即被抛弃不再经过其他过滤器； NEUTRAL，有序列表里的下个过滤器过接着处理日志；
+                    ACCEPT，日志会被立即处理，不再经过剩余过滤器。 -->
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="infoRollingFile"/>
+            <AppenderRef ref="warnRollingFile"/>
+            <AppenderRef ref="errorRollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

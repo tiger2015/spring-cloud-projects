@@ -13,6 +13,7 @@
         <module>service-provider</module>
         <module>service-consumer</module>
         <module>config-server</module>
+        <module>consume-manager</module>
     </modules>
 
     <name>spring-cloud-projects</name>
@@ -106,6 +107,7 @@
                             <include>**/*.xml</include>
                             <include>**/*.yml</include>
                             <include>**/*.properties</include>
+                            <include>**/*.html</include>
                         </includes>
                     </resource>
                 </resources>
