@@ -15,7 +15,7 @@ import java.util.Map;
  * @Date 2019/10/28 15:28
  * @Version 1.0
  **/
-@Controller
+//@Controller
 @Slf4j
 public class LoginController {
 
