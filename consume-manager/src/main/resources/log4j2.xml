@@ -50,9 +50,9 @@
     <Loggers>
         <Root level="info">
             <AppenderRef ref="console"/>
-            <AppenderRef ref="infoRollingFile"/>
-            <AppenderRef ref="warnRollingFile"/>
-            <AppenderRef ref="errorRollingFile"/>
+            <!--<AppenderRef ref="infoRollingFile"/>-->
+            <!--<AppenderRef ref="warnRollingFile"/>-->
+            <!--<AppenderRef ref="errorRollingFile"/>-->
         </Root>
     </Loggers>
 </Configuration>

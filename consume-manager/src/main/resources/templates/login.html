@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+
+<div id="login">
+    <form action="/login" method="post">
+        <label id="title">登录</label>
+        <input type="text" id="name" placeholder="username" name="user"/>
+        <br/>
+        <input type="password" id="pwd" placeholder="password" name="pwd"/>
+        <br/>
+        <input type="submit" value="login"/>
+    </form>
+</div>
+</body>
+</html>
+<style>
+    #login {
+        position: absolute;
+        margin-left: 40%;
+        width: 240px;
+        height: 240px;
+        margin-top: 15%;
+        background-color: azure;
+    }
+
+    #title{
+        width: 240px;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font: 20px bold;
+    }
+
+    input {
+        width: 200px;
+        margin-top: 20px;
+        margin-left: 20px;
+        height: 30px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+</style>
