@@ -13,17 +13,17 @@ import java.util.List;
 public class Account implements Serializable {
     private static final long serialVersionUID = -8205624531255044905L;
 
-    private long id;
+    private Long id;
     private String name;
     private String password;
 
     private List<Role> roleList;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

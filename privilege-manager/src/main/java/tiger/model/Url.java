@@ -11,15 +11,15 @@ import java.io.Serializable;
  **/
 public class Url implements Serializable {
     private static final long serialVersionUID = 3445021238903554372L;
-    private int id;
+    private Integer id;
     private String url;
     private String description;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

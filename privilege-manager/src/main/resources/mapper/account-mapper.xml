@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tiger.dao.AccountDao">
+    <resultMap id="account" type="tiger.model.Account">
+        <id column="id" property="id"/>
+        <result column="user_name" property="name" javaType="string"/>
+        <result column="password" property="password"/>
+    </resultMap>
+
+    <resultMap id="accountRoles" type="tiger.model.Account">
+        <id column="id" property="id"/>
+        <result column="user_name" property="name"/>
+        <collection property="roleList" ofType="tiger.model.Role">
+            <id property="id" column="id"/>
+            <result property="name" column="role_name"/>
+            <result property="description" column="role_desc"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" parameterType="tiger.model.Account" flushCache="true" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_account (user_name, password) values(#{name}, #{password});
+    </insert>
+
+    <delete id="delete" parameterType="long" flushCache="true">
+        delete from sys_account where sys_account.id = #{id};
+    </delete>
+
+    <select id="select" parameterType="long"  resultMap="account">
+         select * from sys_account where sys_account.id=#{id};
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="account">
+            select * from sys_account where sys_account.name like %#{name}%;
+    </select>
+
+</mapper>

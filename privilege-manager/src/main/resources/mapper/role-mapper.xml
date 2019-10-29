@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tiger.dao.RoleDao">
+
+    <resultMap id="role" type="tiger.model.Role">
+        <id property="id" column="id"/>
+        <result column="role_name" property="name"/>
+        <result column="role_desc" property="description"/>
+    </resultMap>
+
+    <resultMap id="rolePermissions" type="tiger.model.Role">
+        <id property="id" column="id"/>
+        <result column="role_name" property="name"/>
+        <collection property="permissionList" ofType="tiger.model.Permission">
+            <id property="id" column="id"/>
+            <result column="permission_code" property="description"/>
+            <result column="permission_name" property="name"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" parameterType="tiger.model.Role" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            flushCache="true">
+        insert into sys_role(role_name, role_desc) values(#{name},#{description})
+    </insert>
+
+    <select id="select" parameterType="int" resultMap="role">
+        select * from sys_role where sys_role.id = #{id};
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="role">
+          select * from sys_role where sys_role.role_name like  %#{name}%;
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from sys_role where sys_role.id=#{id}
+    </delete>
+</mapper>

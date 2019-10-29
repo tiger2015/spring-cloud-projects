@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tiger.dao.PermissionDao">
+
+    <resultMap id="permission" type="tiger.model.Permission">
+        <id column="id" property="id"/>
+        <result column="permission_name" property="name"/>
+        <result column="permission_desc" property="description"/>
+    </resultMap>
+
+    <resultMap id="permissionUrls" type="tiger.model.Permission">
+        <id column="id" property="id"/>
+        <result column="permission_name" property="name"/>
+        <collection property="urlList" ofType="tiger.model.Url">
+            <id column="id" property="id"/>
+            <result column="url" property="url"/>
+            <result column="desc" property="description"/>
+        </collection>
+</resultMap>
+
+    <insert id="insert" parameterType="tiger.model.Permission"  flushCache="true" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into sys_permission (permission_name, permission_desc) values(#{name},#{description});
+    </insert>
+
+    <select id="select" parameterType="int" resultMap="permission">
+        select * from sys_permission where sys_permission.id = #{id};
+    </select>
+
+    <select id="selectByName" parameterType="string" resultMap="permission">
+        select * from sys_permission where sys_permission.permission_name like %#{name}%;
+    </select>
+
+    <delete id="delete" parameterType="int" flushCache="true">
+        delete from sys_permission where sys_permission.id = #{id};
+    </delete>
+</mapper>

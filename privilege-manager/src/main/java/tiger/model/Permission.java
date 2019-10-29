@@ -12,26 +12,26 @@ import java.util.List;
  **/
 public class Permission implements Serializable {
     private static final long serialVersionUID = -3200994688929509194L;
-    private int id;
-    private String permissionCode;
+    private Integer id;
+    private String description;
     private String name;
 
     private List<Url> urlList;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getPermissionCode() {
-        return permissionCode;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPermissionCode(String permissionCode) {
-        this.permissionCode = permissionCode;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {

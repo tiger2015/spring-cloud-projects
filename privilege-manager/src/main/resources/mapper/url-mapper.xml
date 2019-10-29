@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tiger.dao.UrlDao">
+    <resultMap id="url" type="tiger.model.Url">
+        <id column="id" property="id"/>
+        <result column="url" property="url"/>
+        <result column="desc" property="description"/>
+    </resultMap>
+    <insert id="insert" parameterType="tiger.model.Url" flushCache="true" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id">
+        insert into sys_url(url, url_desc) values(#{url}, #{description})
+    </insert>
+    <select id="select" parameterType="int" resultMap="url">
+        select * from sys_url where id=#{id}
+    </select>
+    <select id="selectByName" parameterType="string" resultMap="url">
+         select * from sys_url where sys_url.url like %#{url}%;
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from sys_url where id = #{id}
+    </delete>
+
+</mapper>
