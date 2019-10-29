@@ -5,7 +5,7 @@
 <mapper namespace="tiger.model.Account">
     <resultMap id="account" type="tiger.model.Account">
         <id column="id" property="id"/>
-        <result column="user_name" property="name"/>
+        <result column="user_name" property="name" />
         <result column="password" property="password"/>
         <collection property="roleList" ofType="tiger.model.Role">
             <id property="id" column="id"/>
@@ -13,4 +13,7 @@
             <result property="description" column="role_desc"/>
         </collection>
     </resultMap>
+    
+    <insert id="insert" parameterType="tiger.model.Account" flushCache="true"></insert>
+    
 </mapper>
