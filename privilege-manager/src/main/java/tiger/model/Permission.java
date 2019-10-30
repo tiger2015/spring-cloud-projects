@@ -16,7 +16,9 @@ public class Permission implements Serializable {
     private String description;
     private String name;
 
-    private List<Url> urlList;
+    private List<Url> urlList; // 一个权限包含多个URL
+
+    private List<Role> roles; //一个权限可能属于多个角色
 
     public Integer getId() {
         return id;

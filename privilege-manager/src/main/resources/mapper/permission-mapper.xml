@@ -18,9 +18,10 @@
             <result column="url" property="url"/>
             <result column="desc" property="description"/>
         </collection>
-</resultMap>
+    </resultMap>
 
-    <insert id="insert" parameterType="tiger.model.Permission"  flushCache="true" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    <insert id="insert" parameterType="tiger.model.Permission" flushCache="true" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
         insert into sys_permission (permission_name, permission_desc) values(#{name},#{description});
     </insert>
 
@@ -35,4 +36,16 @@
     <delete id="delete" parameterType="int" flushCache="true">
         delete from sys_permission where sys_permission.id = #{id};
     </delete>
+    <insert id="addUrl">
+          insert into sys_url_permission(url_id, permission_id) values(#{urlId},#{permissionId});
+    </insert>
+
+    <delete id="removeUrl">
+        delete from sys_url_permission where url_id=#{urlId} and permission_id=#{permissionId}
+    </delete>
+
+    <select id="getAllUrl" parameterType="int" resultMap="tiger.dao.UrlDao.url">
+      select url.id, url.url, url.url_desc from sys_url url, sys_url_permission url_permission where
+      url_permission.permission_id=#{id} and url_permission.url_id = url.id
+    </select>
 </mapper>

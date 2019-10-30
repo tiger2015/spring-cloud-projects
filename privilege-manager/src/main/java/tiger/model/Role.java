@@ -17,7 +17,9 @@ public class Role implements Serializable {
     private String name;
     private String description;
 
-    private List<Permission> permissionList;
+    private List<Permission> permissionList; // 每种角色有多种权限
+
+    private List<Account> accounts; // 每种角色包含多个用户
 
     public Integer getId() {
         return id;

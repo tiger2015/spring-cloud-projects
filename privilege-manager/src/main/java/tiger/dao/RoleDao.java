@@ -1,6 +1,8 @@
 package tiger.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import tiger.model.Permission;
 import tiger.model.Role;
 
 import java.util.List;
@@ -15,4 +17,36 @@ public interface RoleDao {
     List<Role> selectByName(String name);
 
     boolean delete(int id);
+
+    /**
+     * 添加权限
+     * @autho tiger
+     * @description TODO
+     * @date 2019/10/30 23:12
+     * @param roleId
+     * @param permissionId
+     * @return java.lang.Long
+     **/
+    Long addPermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
+
+    /**
+     * 删除权限
+     * @autho tiger
+     * @description TODO
+     * @date 2019/10/30 23:13
+     * @param roleId
+     * @param permissionId
+     * @return java.lang.Long
+     **/
+    Long removePermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
+
+    /**
+     * 获取所有的权限
+     * @autho tiger
+     * @description TODO
+     * @date 2019/10/30 23:13
+     * @param id
+     * @return java.util.List<tiger.model.Permission>
+     **/
+    List<Permission> getAllPermission(int id);
 }

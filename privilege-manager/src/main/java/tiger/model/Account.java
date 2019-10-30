@@ -17,7 +17,7 @@ public class Account implements Serializable {
     private String name;
     private String password;
 
-    private List<Role> roleList;
+    private List<Role> roleList; // 一个用户可能包含多个角色
 
     public Long getId() {
         return id;
