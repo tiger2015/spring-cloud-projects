@@ -3,19 +3,22 @@ package tiger.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import tiger.model.Account;
+import tiger.model.Permission;
 import tiger.model.Role;
 
 import java.util.List;
 
 @Mapper
 public interface AccountDao {
-    Long insert(Account account);
+    void insert(Account account);
 
     Account select(long id);
 
     List<Account> selectByName(String name);
 
-    boolean delete(long id);
+    List<Account> selectAll();
+
+    void delete(long id);
 
     /**
      * @autho tiger
@@ -25,7 +28,7 @@ public interface AccountDao {
      * @param roleId
      * @return java.lang.Long
      **/
-    Long addRole(@Param("userId") long accountId, @Param("roleId") int roleId);
+    void addRole(@Param("userId") long accountId, @Param("roleId") int roleId);
 
     /**
      * 删除角色
@@ -34,9 +37,9 @@ public interface AccountDao {
      * @date 2019/10/30 22:56
      * @param accountId
      * @param roleId
-     * @return java.lang.Long
+     * @return
      **/
-    Long deleteRole(@Param("userId") long accountId, @Param("roleId") int roleId);
+    void deleteRole(@Param("userId") long accountId, @Param("roleId") int roleId);
 
     /**
      * 查询用户角色
@@ -46,5 +49,15 @@ public interface AccountDao {
      * @param id
      * @return java.util.List<tiger.model.Role>
      **/
-    List<Role> getRoles(int id);
+    List<Role> getRoles(long id);
+
+    /**
+     * 查找用户权限
+     * @autho tiger
+     * @description TODO
+     * @date 2019/10/31 20:09
+     * @param id
+     * @return java.util.List<tiger.model.Permission>
+     **/
+    List<Permission> getAccoutPermissions(long id);
 }

@@ -22,22 +22,25 @@
 
     <insert id="insert" parameterType="tiger.model.Permission" flushCache="true" useGeneratedKeys="true"
             keyProperty="id" keyColumn="id">
-        insert into sys_permission (permission_name, permission_desc) values(#{name},#{description});
+        insert into sys_permission (permission_name, permission_desc) values(#{name},#{description})
     </insert>
 
     <select id="select" parameterType="int" resultMap="permission">
-        select * from sys_permission where sys_permission.id = #{id};
+        select * from sys_permission where sys_permission.id = #{id}
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="permission">
-        select * from sys_permission where sys_permission.permission_name like %#{name}%;
+        select * from sys_permission where sys_permission.permission_name like %#{name}%
     </select>
 
+    <select id="selectAll" resultMap="permission">
+        select * from sys_permission
+    </select>
     <delete id="delete" parameterType="int" flushCache="true">
-        delete from sys_permission where sys_permission.id = #{id};
+        delete from sys_permission where sys_permission.id = #{id}
     </delete>
     <insert id="addUrl">
-          insert into sys_url_permission(url_id, permission_id) values(#{urlId},#{permissionId});
+          insert into sys_url_permission(url_id, permission_id) values(#{urlId},#{permissionId})
     </insert>
 
     <delete id="removeUrl">

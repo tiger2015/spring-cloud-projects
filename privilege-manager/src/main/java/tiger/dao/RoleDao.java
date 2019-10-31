@@ -10,13 +10,13 @@ import java.util.List;
 @Mapper
 public interface RoleDao {
 
-    int insert(Role role);
+    void insert(Role role);
 
     Role select(int id);
 
     List<Role> selectByName(String name);
 
-    boolean delete(int id);
+    void delete(int id);
 
     /**
      * 添加权限
@@ -27,7 +27,7 @@ public interface RoleDao {
      * @param permissionId
      * @return java.lang.Long
      **/
-    Long addPermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
+    void addPermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
 
     /**
      * 删除权限
@@ -38,7 +38,7 @@ public interface RoleDao {
      * @param permissionId
      * @return java.lang.Long
      **/
-    Long removePermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
+    void removePermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
 
     /**
      * 获取所有的权限

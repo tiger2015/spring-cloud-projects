@@ -8,11 +8,13 @@ import java.util.List;
 @Mapper
 public interface UrlDao {
 
-    int insert(Url url);
+    void insert(Url url);
 
     Url select(int id);
 
     List<Url> selectByName(String url);
 
-    boolean delete(int id);
+    void delete(int id);
+
+    List<Url> selectAllUrls();
 }

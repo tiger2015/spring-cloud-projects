@@ -26,11 +26,11 @@
     </insert>
 
     <select id="select" parameterType="int" resultMap="role">
-        select * from sys_role where sys_role.id = #{id};
+        select * from sys_role where sys_role.id = #{id}
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="role">
-          select * from sys_role where sys_role.role_name like  %#{name}%;
+          select * from sys_role where sys_role.role_name like  %#{name}%
     </select>
 
     <delete id="delete" parameterType="int">

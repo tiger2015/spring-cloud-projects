@@ -16,7 +16,11 @@
         select * from sys_url where id=#{id}
     </select>
     <select id="selectByName" parameterType="string" resultMap="url">
-         select * from sys_url where sys_url.url like %#{url}%;
+         select * from sys_url where sys_url.url like %#{url}%
+    </select>
+
+    <select id="selectAllUrls" resultMap="url">
+         select * from sys_url
     </select>
 
     <delete id="delete" parameterType="int">

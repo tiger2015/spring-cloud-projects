@@ -1,8 +1,10 @@
 package tiger.service;
 
 import tiger.model.Permission;
+import tiger.model.Url;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PermissionService {
 
@@ -14,7 +16,7 @@ public interface PermissionService {
      * @description TODO
      * @date 2019/10/29 23:10
      **/
-    int addPermission(Permission permission);
+    void addPermission(Permission permission);
 
     /**
      * @autho tiger
@@ -34,6 +36,8 @@ public interface PermissionService {
      **/
     List<Permission> getPermissionByName(String name);
 
+    Map<String,Object> getPermissionByPage(int startPage, int pageSize);
+
     /**
      * @autho tiger
      * @description TODO
@@ -41,6 +45,32 @@ public interface PermissionService {
      * @param id
      * @return boolean
      **/
-    boolean removePermission(int id);
+    void removePermission(int id);
 
+    /**
+     *
+     * @param permissionId
+     * @param urlId
+     * @return
+     */
+    void addUrl(int permissionId, int urlId);
+
+    /**
+     * @autho tiger
+     * @description TODO
+     * @date 2019/10/31 20:23
+     * @param permissioinId
+     * @param urlId
+     * @return boolean
+     **/
+    void removeUrl(int permissioinId, int urlId);
+
+    /**
+     * @autho tiger
+     * @description TODO
+     * @date 2019/10/31 20:23
+     * @param id
+     * @return java.util.List<tiger.model.Url>
+     **/
+    List<Url> getAllUrls(int id);
 }

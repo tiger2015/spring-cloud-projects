@@ -1,11 +1,17 @@
 package tiger.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tiger.dao.PermissionDao;
+import tiger.model.PageInfo;
 import tiger.model.Permission;
+import tiger.model.Url;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName PermissionServiceImpl
@@ -21,9 +27,8 @@ public class PermissionServiceImpl implements PermissionService {
     private PermissionDao permissionDao;
 
     @Override
-    public int addPermission(Permission permission) {
+    public void addPermission(Permission permission) {
         permissionDao.insert(permission);
-        return permission.getId();
     }
 
     @Override
@@ -37,7 +42,36 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public boolean removePermission(int id) {
-        return permissionDao.delete(id);
+    public Map<String, Object> getPermissionByPage(int startPage, int pageSize) {
+        Page<Object> page = PageHelper.startPage(startPage, pageSize);
+        List<Permission> permissions = permissionDao.selectAll();
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setTotal(page.getPages());
+        pageInfo.setPageSize(page.getPageSize());
+        pageInfo.setCurrent(page.getPageNum());
+        Map<String, Object> result = new HashMap<>();
+        result.put("result", permissions);
+        result.put("pageInfo", pageInfo);
+        return result;
+    }
+
+    @Override
+    public void removePermission(int id) {
+        permissionDao.delete(id);
+    }
+
+    @Override
+    public void addUrl(int permissionId, int urlId) {
+        permissionDao.addUrl(permissionId, urlId);
+    }
+
+    @Override
+    public void removeUrl(int permissioinId, int urlId) {
+        permissionDao.removeUrl(permissioinId, urlId);
+    }
+
+    @Override
+    public List<Url> getAllUrls(int id) {
+        return permissionDao.getAllUrl(id);
     }
 }

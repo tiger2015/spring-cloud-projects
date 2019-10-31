@@ -20,3 +20,8 @@ mybatis:
 logging:
   level:
     tiger.dao: debug
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true

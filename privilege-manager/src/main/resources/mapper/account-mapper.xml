@@ -24,19 +24,22 @@
     </insert>
 
     <delete id="delete" parameterType="long" flushCache="true">
-        delete from sys_account where sys_account.id = #{id};
+        delete from sys_account where sys_account.id = #{id}
     </delete>
 
     <select id="select" parameterType="long"  resultMap="account">
-         select * from sys_account where sys_account.id=#{id};
+         select * from sys_account where sys_account.id=#{id}
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="account">
-            select * from sys_account where sys_account.name like %#{name}%;
+            select * from sys_account where sys_account.name like %#{name}%
     </select>
 
+    <select id="selectAll" resultMap="account">
+         select * from sys_account
+    </select>
     <insert id="addRole">
-        insert into sys_user_role(user_id, role_id) values(#{userId}, #{roleId});
+        insert into sys_user_role(user_id, role_id) values(#{userId}, #{roleId})
     </insert>
 
     <select id="getRoles" resultMap="tiger.dao.RoleDao.role">
@@ -45,7 +48,14 @@
     </select>
 
     <delete id="deleteRole">
-        delete from sys_user_role where user_id = #{userId} and role_id=#{roleId};
+        delete from sys_user_role where user_id = #{userId} and role_id=#{roleId}
     </delete>
 
+    <select id="getAccoutPermissions" parameterType="long" resultMap="tiger.dao.PermissionDao.permission">
+   select permission.id, permission.permission_name,permission_desc from sys_permission permission, sys_role_permission role_permission
+  where permission.id = role_permission.permission_id and role_permission.role_id in
+   (
+   select user_role.role_id from sys_user_role user_role where user_role.user_id = #{id}
+   )
+    </select>
 </mapper>

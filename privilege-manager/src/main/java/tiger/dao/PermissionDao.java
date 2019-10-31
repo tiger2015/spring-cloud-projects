@@ -9,13 +9,15 @@ import java.util.List;
 
 @Mapper
 public interface PermissionDao {
-    Long insert(Permission permission);
+    void insert(Permission permission);
 
     Permission select(int id);
 
     List<Permission> selectByName(String name);
 
-    boolean delete(int id);
+    List<Permission> selectAll();
+
+    void delete(int id);
 
     /**
      * 给权限加入URL
@@ -24,9 +26,9 @@ public interface PermissionDao {
      * @date 2019/10/30 23:00
      * @param permissionId
      * @param urlId
-     * @return java.lang.Long
+     * @return
      **/
-    Long addUrl(@Param("permissionId") int permissionId, @Param("urlId") int urlId);
+    void addUrl(@Param("permissionId") int permissionId, @Param("urlId") int urlId);
 
     /**
      * 给权限移除URL
@@ -35,9 +37,9 @@ public interface PermissionDao {
      * @date 2019/10/30 23:01
      * @param permissionId
      * @param urlId
-     * @return boolean
+     * @return
      **/
-    boolean removeUrl(@Param("permissionId") int permissionId, @Param("urlId") int urlId);
+    void removeUrl(@Param("permissionId") int permissionId, @Param("urlId") int urlId);
 
     /**
      * 获取权限的URL
