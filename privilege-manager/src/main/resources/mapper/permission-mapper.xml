@@ -30,7 +30,11 @@
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="permission">
-        select * from sys_permission where sys_permission.name like %#{name}%
+        select * from sys_permission where sys_permission.name = #{name}
+    </select>
+
+    <select id="selectLikeName" parameterType="string" resultMap="permission">
+        select * from sys_permission where sys_permission.name like CONCAT("%",#{name},"%")
     </select>
 
     <select id="selectAll" resultMap="permission">
@@ -39,15 +43,15 @@
     <delete id="delete" parameterType="int" flushCache="true">
         delete from sys_permission where sys_permission.id = #{id}
     </delete>
-    <insert id="addUrl">
+    <insert id="insertUrl">
           insert into sys_url_permission(url_id, permission_id) values(#{urlId},#{permissionId})
     </insert>
 
-    <delete id="removeUrl">
+    <delete id="deleteUrl">
         delete from sys_url_permission where url_id=#{urlId} and permission_id=#{permissionId}
     </delete>
 
-    <select id="getAllUrl" parameterType="int" resultMap="tiger.dao.UrlDao.url">
+    <select id="selectAllUrls" parameterType="int" resultMap="tiger.dao.UrlDao.url">
       select url.id, url.url, url.desc from sys_url url, sys_url_permission url_permission where
       url_permission.permission_id=#{id} and url_permission.url_id = url.id
     </select>

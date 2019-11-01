@@ -14,7 +14,9 @@ public interface AccountDao {
 
     Account select(long id);
 
-    List<Account> selectByName(String name);
+    Account selectByName(String name);
+
+    List<Account> selectLikeName(String name);
 
     List<Account> selectAll();
 
@@ -28,7 +30,7 @@ public interface AccountDao {
      * @param roleId
      * @return java.lang.Long
      **/
-    void addRole(@Param("userId") long accountId, @Param("roleId") int roleId);
+    void insertRole(@Param("userId") long accountId, @Param("roleId") int roleId);
 
     /**
      * 删除角色
@@ -49,7 +51,7 @@ public interface AccountDao {
      * @param id
      * @return java.util.List<tiger.model.Role>
      **/
-    List<Role> getRoles(long id);
+    List<Role> selectRoles(long id);
 
     /**
      * 查找用户权限
@@ -59,5 +61,5 @@ public interface AccountDao {
      * @param id
      * @return java.util.List<tiger.model.Permission>
      **/
-    List<Permission> getAccoutPermissions(long id);
+    List<Permission> selectPermissions(long id);
 }

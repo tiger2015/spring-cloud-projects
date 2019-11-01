@@ -14,7 +14,9 @@ public interface RoleDao {
 
     Role select(int id);
 
-    List<Role> selectByName(String name);
+    Role selectByName(String name);
+
+    List<Role> selectLikeName(String name);
 
     void delete(int id);
 
@@ -27,7 +29,7 @@ public interface RoleDao {
      * @param permissionId
      * @return java.lang.Long
      **/
-    void addPermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
+    void insertPermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
 
     /**
      * 删除权限
@@ -38,7 +40,7 @@ public interface RoleDao {
      * @param permissionId
      * @return java.lang.Long
      **/
-    void removePermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
+    void deletePermission(@Param("roleId") int roleId, @Param("permissionId") int permissionId);
 
     /**
      * 获取所有的权限
@@ -48,5 +50,5 @@ public interface RoleDao {
      * @param id
      * @return java.util.List<tiger.model.Permission>
      **/
-    List<Permission> getAllPermission(int id);
+    List<Permission> selectAllPermissions(int id);
 }

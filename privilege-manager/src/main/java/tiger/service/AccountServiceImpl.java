@@ -31,8 +31,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getAccountByName(String name) {
+    public Account getAccountByName(String name) {
         return accountDao.selectByName(name);
+    }
+
+    @Override
+    public List<Account> searchAccountByName(String name) {
+        return accountDao.selectLikeName(name);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Role> getAccountRoles(long id) {
-        return accountDao.getRoles(id);
+        return accountDao.selectRoles(id);
     }
 
     @Override
@@ -66,11 +71,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void grantRole(long accountId, int roleId) {
-        accountDao.addRole(accountId, roleId);
+        accountDao.insertRole(accountId, roleId);
     }
 
     @Override
-    public List<Permission> getAllPermission(long id) {
-        return accountDao.getAccoutPermissions(id);
+    public List<Permission> getAllPermissions(long id) {
+        return accountDao.selectPermissions(id);
     }
 }

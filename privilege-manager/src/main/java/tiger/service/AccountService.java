@@ -13,7 +13,9 @@ public interface AccountService {
 
     Account getAccount(long id);
 
-    List<Account> getAccountByName(String name);
+    Account getAccountByName(String name);
+
+    List<Account> searchAccountByName(String name);
 
     void removeAccount(long id);
 
@@ -68,6 +70,6 @@ public interface AccountService {
      * @param id
      * @return java.util.List<tiger.model.Permission>
      **/
-    List<Permission> getAllPermission(long id);
+    List<Permission> getAllPermissions(long id);
 
 }

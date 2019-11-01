@@ -13,7 +13,9 @@ public interface PermissionDao {
 
     Permission select(int id);
 
-    List<Permission> selectByName(String name);
+    Permission selectByName(String name);
+
+    List<Permission> selectLikeName(String name);
 
     List<Permission> selectAll();
 
@@ -28,7 +30,7 @@ public interface PermissionDao {
      * @param urlId
      * @return
      **/
-    void addUrl(@Param("permissionId") int permissionId, @Param("urlId") int urlId);
+    void insertUrl(@Param("permissionId") int permissionId, @Param("urlId") int urlId);
 
     /**
      * 给权限移除URL
@@ -39,7 +41,7 @@ public interface PermissionDao {
      * @param urlId
      * @return
      **/
-    void removeUrl(@Param("permissionId") int permissionId, @Param("urlId") int urlId);
+    void deleteUrl(@Param("permissionId") int permissionId, @Param("urlId") int urlId);
 
     /**
      * 获取权限的URL
@@ -49,5 +51,5 @@ public interface PermissionDao {
      * @param id
      * @return java.util.List<tiger.model.Url>
      **/
-    List<Url> getAllUrl(int id);
+    List<Url> selectAllUrls(int id);
 }

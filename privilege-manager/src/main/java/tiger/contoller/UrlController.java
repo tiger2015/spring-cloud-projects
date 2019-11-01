@@ -40,8 +40,8 @@ public class UrlController {
         return urlService.getUrl(id);
     }
 
-    @RequestMapping("/getByName/{name}")
-    public List<Url> getUrlByName(@PathVariable("name") String name) {
+    @RequestMapping("/getByName")
+    public List<Url> getUrlByName(@RequestParam("name") String name) {
         return urlService.getByName(name);
     }
 

@@ -27,6 +27,8 @@ public interface PermissionService {
      **/
     Permission getPermission(int id);
 
+    Permission getPermissionByName(String name);
+
     /**
      * @autho tiger
      * @description TODO
@@ -34,7 +36,7 @@ public interface PermissionService {
      * @param name
      * @return
      **/
-    List<Permission> getPermissionByName(String name);
+    List<Permission> searchPermissionByName(String name);
 
     Map<String,Object> getPermissionByPage(int startPage, int pageSize);
 

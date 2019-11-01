@@ -37,8 +37,13 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<Permission> getPermissionByName(String name) {
+    public Permission getPermissionByName(String name) {
         return permissionDao.selectByName(name);
+    }
+
+    @Override
+    public List<Permission> searchPermissionByName(String name) {
+        return permissionDao.selectLikeName(name);
     }
 
     @Override
@@ -62,16 +67,16 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public void addUrl(int permissionId, int urlId) {
-        permissionDao.addUrl(permissionId, urlId);
+        permissionDao.insertUrl(permissionId, urlId);
     }
 
     @Override
     public void removeUrl(int permissioinId, int urlId) {
-        permissionDao.removeUrl(permissioinId, urlId);
+        permissionDao.deleteUrl(permissioinId, urlId);
     }
 
     @Override
     public List<Url> getAllUrls(int id) {
-        return permissionDao.getAllUrl(id);
+        return permissionDao.selectAllUrls(id);
     }
 }

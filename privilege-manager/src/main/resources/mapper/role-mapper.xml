@@ -30,22 +30,26 @@
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="role">
-          select * from sys_role where sys_role.name like  %#{name}%
+          select * from sys_role where sys_role.name = #{name}
+    </select>
+
+    <select id="selectLikeName" parameterType="string" resultMap="role">
+          select * from sys_role where sys_role.name like  CONCAT("%",#{name},"%")
     </select>
 
     <delete id="delete" parameterType="int">
         delete from sys_role where sys_role.id=#{id}
     </delete>
 
-    <insert id="addPermission">
+    <insert id="insertPermission">
         insert into sys_role_permission(role_id, permission_id) values(#{roleId}, #{permissionId})
     </insert>
 
-    <delete id="removePermission">
+    <delete id="deletePermission">
         delete from sys_role_permission where role_id = #{roleId} and permission_id = #{permissionId}
     </delete>
 
-    <select id="getAllPermission" resultMap="tiger.dao.PermissionDao.permission">
+    <select id="selectAllPermissions" resultMap="tiger.dao.PermissionDao.permission">
         select permission.id, permission.name,permission.desc from sys_role_permission role_permission, sys_permission permission where
         role_permission.role_id = #{id} and role_permission.permission_id = permission.id
     </select>

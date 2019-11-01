@@ -40,11 +40,15 @@ public class RoleController {
         return roleService.getRole(id);
     }
 
-    @RequestMapping("/getByName/{name}")
-    public List<Role> getByName(@PathVariable("name") String name) {
+    @RequestMapping("/getByName")
+    public Role getByName(@RequestParam("name") String name) {
         return roleService.getRoleByName(name);
     }
 
+    @RequestMapping("/search")
+    public List<Role> search(@RequestParam("name") String name) {
+        return roleService.searchRoleByName(name);
+    }
 
     @RequestMapping("/addPermission/{roleId}/{permissionId}")
     public void addPermission(@PathVariable("roleId") int roleId, @PathVariable("permissionId") int permissionId) {

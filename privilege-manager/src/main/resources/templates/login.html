@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+
+<div id="login">
+    <form th:action="@{/login}" method="post">
+        <label id="title">登录</label>
+        <input type="text" id="name" placeholder="username" name="username"/>
+        <br/>
+        <input type="password" id="pwd" placeholder="password" name="password"/>
+        <br/>
+        <input type="submit" value="login"/>
+        <label id="error" th:text="${error}"></label>
+    </form>
+</div>
+</body>
+</html>
+<style>
+    #login {
+        position: absolute;
+        margin-left: 40%;
+        width: 240px;
+        height: 240px;
+        margin-top: 15%;
+        background-color: azure;
+    }
+
+    #title {
+        position: relative;
+        margin-top: 20px;
+        margin-left: 40%;
+        font: 20px bold;
+        text-align: center;
+    }
+
+    input {
+        position: relative;
+        width: 200px;
+        margin-top: 20px;
+        margin-left: 8%;
+        height: 30px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    #error {
+        position: absolute;
+        color: red;
+        display: flex;
+    }
+</style>

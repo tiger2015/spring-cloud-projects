@@ -37,10 +37,16 @@ public class AccountController {
         return accountService.getAccount(id);
     }
 
-    @RequestMapping("/getByName/{name}")
-    public List<Account> getAccount(@PathVariable("name") String name) {
+    @RequestMapping("/getByName")
+    public Account getAccount(@RequestParam("name") String name) {
         return accountService.getAccountByName(name);
     }
+
+    @RequestMapping("/search")
+    public List<Account> search(@RequestParam("name") String name) {
+        return accountService.searchAccountByName(name);
+    }
+
 
     @RequestMapping("/getAccounts/{pageNumber}/{pageSize}")
     public Map<String, Object> getAccounts(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize) {
@@ -49,14 +55,13 @@ public class AccountController {
 
     @RequestMapping("/getPermissions/{id}")
     public List<Permission> getAccountPermissions(@PathVariable("id") long accountId) {
-        return accountService.getAllPermission(accountId);
+        return accountService.getAllPermissions(accountId);
     }
 
     @RequestMapping("/getRoles/{id}")
     public List<Role> getAccountRoles(@PathVariable("id") long accountId) {
         return accountService.getAccountRoles(accountId);
     }
-
 
     @RequestMapping("/revoke/{accountId}/{roleId}")
     public void revokeRole(@PathVariable("accountId") long accountId, @PathVariable("roleId") int roleId) {

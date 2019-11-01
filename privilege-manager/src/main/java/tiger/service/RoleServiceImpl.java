@@ -32,8 +32,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getRoleByName(String name) {
+    public Role getRoleByName(String name) {
         return roleDao.selectByName(name);
+    }
+
+    @Override
+    public List<Role> searchRoleByName(String name) {
+        return roleDao.selectLikeName(name);
     }
 
     @Override
@@ -43,16 +48,16 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void addPermission(int roleId, int permissionId) {
-      roleDao.addPermission(roleId, permissionId);
+      roleDao.insertPermission(roleId, permissionId);
     }
 
     @Override
     public void removePermission(int roleId, int permissionId) {
-         roleDao.removePermission(roleId, permissionId);
+         roleDao.deletePermission(roleId, permissionId);
     }
 
     @Override
     public List<Permission> getAllPermissions(int id) {
-        return roleDao.getAllPermission(id);
+        return roleDao.selectAllPermissions(id);
     }
 }

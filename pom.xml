@@ -13,8 +13,8 @@
         <module>service-provider</module>
         <module>service-consumer</module>
         <module>config-server</module>
-        <module>consume-manager</module>
         <module>privilege-manager</module>
+        <module>privilege-manager-web</module>
     </modules>
 
     <name>spring-cloud-projects</name>

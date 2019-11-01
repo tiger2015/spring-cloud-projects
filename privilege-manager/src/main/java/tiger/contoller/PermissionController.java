@@ -41,9 +41,13 @@ public class PermissionController {
         return permissionService.getPermission(id);
     }
 
-    @RequestMapping(value = "/getByName/{name}")
-    public List<Permission> getByName(@PathVariable("name") String name) {
+    @RequestMapping(value = "/getByName")
+    public Permission getByName(@RequestParam("name") String name) {
         return permissionService.getPermissionByName(name);
+    }
+    @RequestMapping(value = "/search")
+    public List<Permission> search(@RequestParam("name") String name){
+        return permissionService.searchPermissionByName(name);
     }
 
     @RequestMapping(value = "/getPermissions/{pageNumber}/{pageSize}")
