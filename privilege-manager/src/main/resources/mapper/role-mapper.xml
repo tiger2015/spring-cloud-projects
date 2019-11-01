@@ -6,23 +6,23 @@
 
     <resultMap id="role" type="tiger.model.Role">
         <id property="id" column="id"/>
-        <result column="role_name" property="name"/>
-        <result column="role_desc" property="description"/>
+        <result column="name" property="name"/>
+        <result column="desc" property="description"/>
     </resultMap>
 
     <resultMap id="rolePermissions" type="tiger.model.Role">
         <id property="id" column="id"/>
-        <result column="role_name" property="name"/>
+        <result column="name" property="name"/>
         <collection property="permissionList" ofType="tiger.model.Permission">
             <id property="id" column="id"/>
-            <result column="permission_code" property="description"/>
-            <result column="permission_name" property="name"/>
+            <result column="name" property="description"/>
+            <result column="desc" property="name"/>
         </collection>
     </resultMap>
 
     <insert id="insert" parameterType="tiger.model.Role" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
             flushCache="true">
-        insert into sys_role(role_name, role_desc) values(#{name},#{description})
+        insert into sys_role(name, desc) values(#{name},#{description})
     </insert>
 
     <select id="select" parameterType="int" resultMap="role">
@@ -30,7 +30,7 @@
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="role">
-          select * from sys_role where sys_role.role_name like  %#{name}%
+          select * from sys_role where sys_role.name like  %#{name}%
     </select>
 
     <delete id="delete" parameterType="int">
@@ -46,7 +46,7 @@
     </delete>
 
     <select id="getAllPermission" resultMap="tiger.dao.PermissionDao.permission">
-        select permission.id, permission.permission_name,permission.permission_desc from sys_role_permission role_permission, sys_permission permission where
+        select permission.id, permission.name,permission.desc from sys_role_permission role_permission, sys_permission permission where
         role_permission.role_id = #{id} and role_permission.permission_id = permission.id
     </select>
 </mapper>

@@ -6,13 +6,13 @@
 
     <resultMap id="permission" type="tiger.model.Permission">
         <id column="id" property="id"/>
-        <result column="permission_name" property="name"/>
-        <result column="permission_desc" property="description"/>
+        <result column="name" property="name"/>
+        <result column="desc" property="description"/>
     </resultMap>
 
     <resultMap id="permissionUrls" type="tiger.model.Permission">
         <id column="id" property="id"/>
-        <result column="permission_name" property="name"/>
+        <result column="name" property="name"/>
         <collection property="urlList" ofType="tiger.model.Url">
             <id column="id" property="id"/>
             <result column="url" property="url"/>
@@ -22,7 +22,7 @@
 
     <insert id="insert" parameterType="tiger.model.Permission" flushCache="true" useGeneratedKeys="true"
             keyProperty="id" keyColumn="id">
-        insert into sys_permission (permission_name, permission_desc) values(#{name},#{description})
+        insert into sys_permission (name, desc) values(#{name},#{description})
     </insert>
 
     <select id="select" parameterType="int" resultMap="permission">
@@ -30,7 +30,7 @@
     </select>
 
     <select id="selectByName" parameterType="string" resultMap="permission">
-        select * from sys_permission where sys_permission.permission_name like %#{name}%
+        select * from sys_permission where sys_permission.name like %#{name}%
     </select>
 
     <select id="selectAll" resultMap="permission">
@@ -48,7 +48,7 @@
     </delete>
 
     <select id="getAllUrl" parameterType="int" resultMap="tiger.dao.UrlDao.url">
-      select url.id, url.url, url.url_desc from sys_url url, sys_url_permission url_permission where
+      select url.id, url.url, url.desc from sys_url url, sys_url_permission url_permission where
       url_permission.permission_id=#{id} and url_permission.url_id = url.id
     </select>
 </mapper>

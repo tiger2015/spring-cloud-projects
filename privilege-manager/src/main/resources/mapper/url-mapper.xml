@@ -10,7 +10,7 @@
     </resultMap>
     <insert id="insert" parameterType="tiger.model.Url" flushCache="true" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id">
-        insert into sys_url(url, url_desc) values(#{url}, #{description})
+        insert into sys_url(url, desc) values(#{url}, #{description})
     </insert>
     <select id="select" parameterType="int" resultMap="url">
         select * from sys_url where id=#{id}

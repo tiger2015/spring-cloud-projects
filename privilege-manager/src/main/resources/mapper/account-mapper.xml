@@ -5,22 +5,22 @@
 <mapper namespace="tiger.dao.AccountDao">
     <resultMap id="account" type="tiger.model.Account">
         <id column="id" property="id"/>
-        <result column="user_name" property="name" javaType="string"/>
+        <result column="name" property="name" javaType="string"/>
         <result column="password" property="password"/>
     </resultMap>
 
     <resultMap id="accountRoles" type="tiger.model.Account">
         <id column="id" property="id"/>
-        <result column="user_name" property="name"/>
+        <result column="name" property="name"/>
         <collection property="roleList" ofType="tiger.model.Role">
             <id property="id" column="id"/>
-            <result property="name" column="role_name"/>
-            <result property="description" column="role_desc"/>
+            <result property="name" column="name"/>
+            <result property="description" column="desc"/>
         </collection>
     </resultMap>
 
     <insert id="insert" parameterType="tiger.model.Account" flushCache="true" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_account (user_name, password) values(#{name}, #{password});
+        insert into sys_account (name, password) values(#{name}, #{password});
     </insert>
 
     <delete id="delete" parameterType="long" flushCache="true">
@@ -43,7 +43,7 @@
     </insert>
 
     <select id="getRoles" resultMap="tiger.dao.RoleDao.role">
-      select role.id, role.role_name, role.role_desc from  sys_user_role user_role,sys_role role
+      select role.id, role.name, role.desc from  sys_user_role user_role,sys_role role
        where user_role.role_id = role.id AND user_role.user_id = #{id}
     </select>
 
@@ -52,7 +52,7 @@
     </delete>
 
     <select id="getAccoutPermissions" parameterType="long" resultMap="tiger.dao.PermissionDao.permission">
-   select permission.id, permission.permission_name,permission_desc from sys_permission permission, sys_role_permission role_permission
+   select permission.id, permission.name,permission.desc from sys_permission permission, sys_role_permission role_permission
   where permission.id = role_permission.permission_id and role_permission.role_id in
    (
    select user_role.role_id from sys_user_role user_role where user_role.user_id = #{id}
