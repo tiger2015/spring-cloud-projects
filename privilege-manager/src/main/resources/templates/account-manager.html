@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/static/js/jquery/jquery-3.4.1.min.js}" type="text/javascript"></script>
+</head>
+<body>
+<h3>用户管理</h3>
+<div>
+    <label>账号</label>
+    <input type="text" id="name"/>
+    <input type="button" value="查询" id="search"/>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#search").click(function () {
+            var name = $("#name").value;
+            $.ajax('/privileges/account/search', {
+                async: false,
+                type: "POST",
+                data: {
+                    "name": name
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            })
+
+
+        });
+
+    })
+
+</script>

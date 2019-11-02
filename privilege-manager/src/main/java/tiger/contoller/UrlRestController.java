@@ -17,7 +17,7 @@ import java.util.Map;
  **/
 @RestController
 @RequestMapping("/url")
-public class UrlController {
+public class UrlRestController {
 
     @Autowired
     private UrlService urlService;
