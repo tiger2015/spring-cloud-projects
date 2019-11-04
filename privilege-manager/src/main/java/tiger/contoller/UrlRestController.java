@@ -16,7 +16,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping("/url")
+@RequestMapping("/url/rest")
 public class UrlRestController {
 
     @Autowired

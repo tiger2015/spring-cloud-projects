@@ -7,15 +7,31 @@ import tiger.model.Permission;
 import tiger.model.Role;
 import tiger.service.AccountService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/account/rest")
 public class AccountRestController {
 
     @Autowired
     private AccountService accountService;
+
+    @RequestMapping("/login")
+    public Map<String, Object> login(@RequestParam("username") String userName, @RequestParam("password") String password) {
+        Map<String, Object> result = new HashMap<>();
+        Account account = accountService.getAccountByName(userName);
+        if (account == null || !userName.equals(account.getName()) || !password.equals(account.getPassword())) {
+            result.put("msg", "username or password error");
+            result.put("status", "400");
+        } else {
+            result.put("msg", "success");
+            result.put("status", "200");
+        }
+        return result;
+    }
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void add(@RequestParam("user") String name, @RequestParam("password") String password) {
@@ -43,8 +59,8 @@ public class AccountRestController {
     }
 
     @RequestMapping("/search")
-    public List<Account> search(@RequestParam("name") String name) {
-        return accountService.searchAccountByName(name);
+    public Map<String, Object> search(@RequestParam("name") String name, @RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) {
+        return accountService.searchAccountByName(name, pageNumber, pageSize);
     }
 
 

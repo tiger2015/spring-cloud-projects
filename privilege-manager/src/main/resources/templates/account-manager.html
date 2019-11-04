@@ -6,36 +6,93 @@
     <script th:src="@{/static/js/jquery/jquery-3.4.1.min.js}" type="text/javascript"></script>
 </head>
 <body>
-<h3>用户管理</h3>
 <div>
-    <label>账号</label>
-    <input type="text" id="name"/>
-    <input type="button" value="查询" id="search"/>
+    <h3>用户管理</h3>
+    <div>
+        <label>账号</label>
+        <input type="text" id="name"/>
+        <input type="button" value="查询" id="search"/>
+    </div>
+    <div id="result" th:fragment="result">
+        <table>
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>账号</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="account: ${result.accounts}">
+                <td th:text="${account.id}">1</td>
+                <td th:text="${account.name}">test</td>
+                <td th:onclick="|deleteAccount('/privileges/account/delete',${account.id})|">删除</td>
+                <td th:href="@{'/account/query'+${account.id}}">编辑</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">
+                    <a href="#"
+                       th:onclick="|navigate('/privileges/account/search',${search},${result['pageInfo'].pageSize},${result['pageInfo'].current + 1})|">上一页</a>
+                    <a href="#"
+                       th:onclick="|navigate('/privileges/account/search',${search},${result['pageInfo'].pageSize},${result['pageInfo'].current - 1})|">下一页</a>
+                    <label>总页数</label>
+                    <label th:text="${result['pageInfo'].current}"></label>
+                    <label>当前页</label>
+                    <label th:text="${result['pageInfo'].total}"></label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
 <script type="text/javascript">
     $(document).ready(function () {
-
         $("#search").click(function () {
-            var name = $("#name").value;
-            $.ajax('/privileges/account/search', {
-                async: false,
-                type: "POST",
-                data: {
-                    "name": name
-                },
-                success: function (data) {
-                    console.log(data);
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            })
-
-
+            var keyWords = $("#name").val();
+            console.log(keyWords);
+            navigate('/privileges/account/search', keyWords, 0, 5);
         });
+    });
 
-    })
+    function navigate(url, name, pageSize, pageNumber) {
+        //$("#result").load(url,{"name":name, "pageSize":pageSize, "pageNumber":pageNumber});
+
+        $.ajax(url, {
+            async: true,
+            type: "POST",
+            data: {
+                "name": name,
+                "pageSize": pageSize,
+                "pageNumber": pageNumber
+            },
+            success: function (data) {
+                //console.log(data);
+                if (data != null) {
+                    // 加载获取的HTML
+                    $("#result").html(data)
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+
+    function deleteAccount(url, id) {
+        $.ajax(url, {
+            async: true,
+            type: "POST",
+            data: {
+                "id": id
+            },
+            success: function (data) {
+                $(this)
+            }
+        })
+    }
 
 </script>
