@@ -28,6 +28,7 @@ public class AccountRestController {
         } else {
             result.put("msg", "success");
             result.put("status", "200");
+            result.put("accountId", account.getId());
         }
         return result;
     }
