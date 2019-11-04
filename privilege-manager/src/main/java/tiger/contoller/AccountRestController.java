@@ -1,5 +1,6 @@
 package tiger.contoller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tiger.model.Account;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/account/rest")
+@Slf4j
 public class AccountRestController {
 
     @Autowired
@@ -24,13 +26,18 @@ public class AccountRestController {
         Account account = accountService.getAccountByName(userName);
         if (account == null || !userName.equals(account.getName()) || !password.equals(account.getPassword())) {
             result.put("msg", "username or password error");
-            result.put("status", "400");
+            result.put("status", 400);
         } else {
             result.put("msg", "success");
-            result.put("status", "200");
+            result.put("status", 200);
             result.put("accountId", account.getId());
         }
         return result;
+    }
+
+    @RequestMapping(value = "/logout",method = RequestMethod.POST)
+    public void logout(@RequestParam("accountId") String accountId){
+        log.info("logout:"+accountId);
     }
 
 
