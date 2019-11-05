@@ -39,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
     public  Map<String,Object> searchAccountByName(String name,int pageNumber, int pageSize) {
         Page<Account> page = PageHelper.startPage(pageNumber, pageSize);
         Map<String, Object> result = new HashMap<>();
-        List<Account> accounts = accountDao.selectAll();
+        List<Account> accounts = accountDao.selectLikeName(name);
         result.put("accounts", accounts);
         PageInfo pageInfo = new PageInfo();
         pageInfo.setTotal(page.getPages());
