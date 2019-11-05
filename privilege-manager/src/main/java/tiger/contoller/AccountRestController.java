@@ -7,15 +7,31 @@ import tiger.model.Permission;
 import tiger.model.Role;
 import tiger.service.AccountService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/account/rest")
 public class AccountRestController {
 
     @Autowired
     private AccountService accountService;
+
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    public Map<String, Object> login(@RequestParam("username") String userName, @RequestParam("password") String password) {
+        Account account = accountService.getAccountByName(userName);
+        Map<String, Object> result = new HashMap<>();
+        if (account == null || !userName.equals(account.getName()) || !password.equals(account.getPassword())) {
+            result.put("status", 400);
+            result.put("msg", "username or password error");
+        } else {
+            result.put("status", 200);
+            result.put("accountId", account.getId());
+        }
+        return result;
+    }
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void add(@RequestParam("user") String name, @RequestParam("password") String password) {
