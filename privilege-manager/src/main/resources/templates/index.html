@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <script th:src="@{/static/js/jquery/jquery-3.4.1.min.js}" type="text/javascript"></script>
     <title>首页</title>
-    <base target="iFrame"/>
 </head>
 <body>
 
@@ -18,9 +17,9 @@
     <div id="menu">
         <ul>
             <li>
-                <a th:href="@{/templates/account-manager.html}" target="iFrame">用户管理</a>
+                <a href="#" onclick="navigateTo('/privileges/account/manager')">用户管理</a>
                 <ul>
-                    <li><a th:href="@{/templates/account-manager.html}" target="iFrame">用户查询</a></li>
+                    <li><a href="#" onclick="navigateTo('/privileges/account/manager')">用户查询</a></li>
                     <li><a th:href="@{#}">添加用户</a></li>
                 </ul>
             </li>
@@ -42,8 +41,8 @@
     </div>
 </div>
 
-<div id="center">
-    <iframe name="iFrame"></iframe>
+<div id="center" th:fragment="result">
+
 </div>
 </body>
 </html>
@@ -69,7 +68,28 @@
                 });
             }
         );
-    })
+    });
+
+    function navigateTo(url) {
+        $.ajax(url,
+            {
+                async: true,
+                type: "POST",
+                data: {
+                    "pageSize": 5,
+                    "pageNumber": 0
+                },
+                success: function (data) {
+                    //console.log(data);
+                    // 加载获取的HTML
+                    $("#center").html(data)
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            }
+        );
+    }
 </script>
 
 
@@ -142,10 +162,11 @@
         width: 100px;
         left: 0;
     }
+
     #menu ul li:hover ul li a {
         display: block;
         background-color: lawngreen;
-        color:#000;
+        color: #000;
     }
 
     #menu ul li:hover ul li a:hover {

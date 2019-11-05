@@ -4,7 +4,7 @@ server:
     context-path: /privileges
 spring:
   profiles:
-    active: dev
+    active: test
   mvc:
     static-path-pattern: /static/**
   resources:

@@ -36,8 +36,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> searchAccountByName(String name) {
-        return accountDao.selectLikeName(name);
+    public  Map<String,Object> searchAccountByName(String name,int pageNumber, int pageSize) {
+        Page<Account> page = PageHelper.startPage(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<>();
+        List<Account> accounts = accountDao.selectAll();
+        result.put("accounts", accounts);
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setTotal(page.getPages());
+        pageInfo.setPageSize(page.getPageSize());
+        pageInfo.setCurrent(page.getPageNum());
+        result.put("pageInfo", pageInfo);
+        return result;
     }
 
     @Override
@@ -50,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
         Page<Account> page = PageHelper.startPage(pageNumber, pageSize);
         Map<String, Object> result = new HashMap<>();
         List<Account> accounts = accountDao.selectAll();
-        result.put("result", accounts);
+        result.put("accounts", accounts);
         PageInfo pageInfo = new PageInfo();
         pageInfo.setTotal(page.getPages());
         pageInfo.setPageSize(page.getPageSize());

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="error" interval="30">
+<Configuration status="warn" interval="30">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--<ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>-->
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <RollingFile name="RollingFile" fileName="logs/app.log"
@@ -12,7 +12,10 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="debug">
+        <Logger name="tiger.dao" level="debug" additivity="false">
+            <Appender-Ref ref="Console"/>
+        </Logger>
+        <Root level="info">
             <Appender-Ref ref="Console"/>
         </Root>
     </Loggers>
