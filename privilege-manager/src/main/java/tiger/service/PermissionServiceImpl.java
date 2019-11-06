@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tiger.dao.PermissionDao;
+import tiger.model.Account;
 import tiger.model.PageInfo;
 import tiger.model.Permission;
 import tiger.model.Url;
@@ -42,8 +43,17 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<Permission> searchPermissionByName(String name) {
-        return permissionDao.selectLikeName(name);
+    public Map<String, Object> searchPermissionByName(String name, int pageNumber, int pageSize) {
+        Page<Account> page = PageHelper.startPage(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<>();
+        List<Permission> permissions = permissionDao.selectLikeName(name);
+        result.put("permissions", permissions);
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setTotal(page.getPages());
+        pageInfo.setPageSize(page.getPageSize());
+        pageInfo.setCurrent(page.getPageNum());
+        result.put("pageInfo", pageInfo);
+        return result;
     }
 
     @Override

@@ -16,6 +16,8 @@ public class Permission implements Serializable {
     private String description;
     private String name;
 
+    private String url;
+
     private List<Url> urlList; // 一个权限包含多个URL
 
     private List<Role> roles; //一个权限可能属于多个角色
@@ -50,5 +52,13 @@ public class Permission implements Serializable {
 
     public void setUrlList(List<Url> urlList) {
         this.urlList = urlList;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

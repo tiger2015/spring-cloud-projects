@@ -46,8 +46,8 @@ public class PermissionRestController {
         return permissionService.getPermissionByName(name);
     }
     @RequestMapping(value = "/search")
-    public List<Permission> search(@RequestParam("name") String name){
-        return permissionService.searchPermissionByName(name);
+    public Map<String, Object> search(@RequestParam("name") String name,@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize){
+        return permissionService.searchPermissionByName(name,pageNumber,pageSize);
     }
 
     @RequestMapping(value = "/getPermissions/{pageNumber}/{pageSize}")

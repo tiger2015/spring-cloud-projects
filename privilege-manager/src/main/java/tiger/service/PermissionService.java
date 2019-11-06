@@ -36,7 +36,7 @@ public interface PermissionService {
      * @param name
      * @return
      **/
-    List<Permission> searchPermissionByName(String name);
+    Map<String, Object> searchPermissionByName(String name, int pageNumber, int pageSize);
 
     Map<String,Object> getPermissionByPage(int startPage, int pageSize);
 
