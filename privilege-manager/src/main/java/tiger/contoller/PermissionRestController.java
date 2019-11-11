@@ -1,13 +1,14 @@
 package tiger.contoller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tiger.model.Permission;
 import tiger.model.Url;
 import tiger.service.PermissionService;
 
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * @ClassName PermissionController
@@ -18,20 +19,33 @@ import java.util.Map;
  **/
 @RestController
 @RequestMapping("/permission/rest")
+@Slf4j
 public class PermissionRestController {
 
     @Autowired
     private PermissionService permissionService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void addPermission(@RequestParam("name") String name, @RequestParam("desc") String description) {
+    public void addPermission(@RequestParam("name") String name, @RequestParam("url") String url, @RequestParam("desc") String description) {
         Permission permission = new Permission();
         permission.setName(name);
         permission.setDescription(description);
+        permission.setUrl(url);
         permissionService.addPermission(permission);
     }
 
-    @RequestMapping(value = "/remove/{id}")
+    @RequestMapping(value = "/deletes")
+    public void deletePermissions(@RequestParam("ids[]") int ids[]){
+        List<Integer> list = new ArrayList<>();
+        for(int id: ids){
+            list.add(id);
+        }
+        log.info("delete permission:"+ Arrays.toString(ids));
+        permissionService.removePermissions(list);
+    }
+
+
+    @RequestMapping(value = "/delete/{id}")
     public void removePermission(@PathVariable("id") int id) {
         permissionService.removePermission(id);
     }

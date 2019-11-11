@@ -76,6 +76,11 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    public void removePermissions(List<Integer> ids) {
+        permissionDao.deletes(ids);
+    }
+
+    @Override
     public void addUrl(int permissionId, int urlId) {
         permissionDao.insertUrl(permissionId, urlId);
     }

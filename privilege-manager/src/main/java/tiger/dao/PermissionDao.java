@@ -21,6 +21,8 @@ public interface PermissionDao {
 
     void delete(int id);
 
+    void deletes(@Param("ids") List<Integer> ids);
+
     /**
      * 给权限加入URL
      * @autho tiger
