@@ -6,11 +6,11 @@
     <resultMap id="url" type="tiger.model.Url">
         <id column="id" property="id"/>
         <result column="url" property="url"/>
-        <result column="desc" property="description"/>
+        <result column="url_desc" property="description"/>
     </resultMap>
     <insert id="insert" parameterType="tiger.model.Url" flushCache="true" useGeneratedKeys="true" keyProperty="id"
             keyColumn="id">
-        insert into sys_url(url, desc) values(#{url}, #{description})
+        insert into sys_url(url, url_desc) values(#{url}, #{description})
     </insert>
     <select id="select" parameterType="int" resultMap="url">
         select * from sys_url where id=#{id}

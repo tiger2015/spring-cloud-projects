@@ -14,6 +14,7 @@
         <module>service-consumer</module>
         <module>config-server</module>
         <module>privilege-manager</module>
+        <module>spring-security-test</module>
     </modules>
 
     <name>spring-cloud-projects</name>
@@ -70,6 +71,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -132,6 +139,15 @@
         </profile>
     </profiles>
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
     <repositories>
         <repository>

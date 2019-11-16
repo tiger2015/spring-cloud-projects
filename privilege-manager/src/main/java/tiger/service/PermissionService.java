@@ -50,6 +50,16 @@ public interface PermissionService {
     void removePermission(int id);
 
     /**
+     * 删除多条数据
+     * @autho tiger
+     * @description TODO
+     * @date 2019/11/11 22:27
+     * @param ids
+     * @return void
+     **/
+    void removePermissions(List<Integer> ids);
+
+    /**
      *
      * @param permissionId
      * @param urlId
