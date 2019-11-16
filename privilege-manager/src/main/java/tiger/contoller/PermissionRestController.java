@@ -24,10 +24,11 @@ public class PermissionRestController {
     private PermissionService permissionService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void addPermission(@RequestParam("name") String name, @RequestParam("desc") String description) {
+    public void addPermission(@RequestParam("name") String name, @RequestParam("desc") String description, @RequestParam("url") String url) {
         Permission permission = new Permission();
         permission.setName(name);
         permission.setDescription(description);
+        permission.setUrl(url);
         permissionService.addPermission(permission);
     }
 

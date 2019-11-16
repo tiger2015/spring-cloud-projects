@@ -23,7 +23,7 @@
 
     <insert id="insert" parameterType="tiger.model.Permission" flushCache="true" useGeneratedKeys="true"
             keyProperty="id" keyColumn="id">
-        insert into sys_permission (name, desc) values(#{name},#{description})
+        insert into sys_permission (name, desc, url) values(#{name},#{description}, #{url})
     </insert>
 
     <select id="select" parameterType="int" resultMap="permission">
