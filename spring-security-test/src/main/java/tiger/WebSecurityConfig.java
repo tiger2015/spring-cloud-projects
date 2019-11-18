@@ -12,11 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import tiger.filter.VerifyCodeFilter;
 import tiger.service.CustomUserDetailsService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 /**
@@ -30,7 +32,8 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private AuthenticationDetailsSource<>
+    @Autowired
+    private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -38,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -50,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 设置用户密码加密
-        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+         //auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.authenticationProvider(customAuthenticationProvider);
     }
 
     @Override
@@ -60,8 +66,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
                 .failureUrl("/login/error")
+                .authenticationDetailsSource(authenticationDetailsSource)
                 .and()
-                .addFilterBefore(new VerifyCodeFilter(), UsernamePasswordAuthenticationFilter.class)
+               // .addFilterBefore(new VerifyCodeFilter(), UsernamePasswordAuthenticationFilter.class)
                 .logout().permitAll()
                 .and()
                 .rememberMe()
