@@ -15,7 +15,7 @@ public class Test {
     @org.junit.Test
     public void test01(){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String result = encoder.encode("test");
+        String result = encoder.encode("admin");
         System.out.println(result);
     }
 

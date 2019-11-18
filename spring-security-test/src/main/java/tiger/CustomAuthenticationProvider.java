@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -32,6 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        log.info("authentication");
         String userName = authentication.getName();
         String password = authentication.getCredentials().toString();
         CustomWebAuthenticationDetails details = (CustomWebAuthenticationDetails) authentication.getDetails();
@@ -40,11 +42,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new DisabledException("验证码错误");
         }
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(userName);
-
-        if (!userDetails.getPassword().equals(password)) {
+        log.info("input password:{}, user password:{}", password, userDetails.getPassword());
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (!bCryptPasswordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("密码错误");
         }
-        return new UsernamePasswordAuthenticationToken(userName, password, userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
     }
 
     @Override

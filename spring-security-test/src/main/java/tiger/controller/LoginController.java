@@ -1,11 +1,13 @@
 package tiger.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,5 +47,12 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("/admin")
+    @ResponseBody
+    @PreAuthorize(value = "hasPermission('/admin','c')")
+    public String admin(){
+        return "has permission for /admin c";
     }
 }

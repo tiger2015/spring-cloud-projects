@@ -2,6 +2,7 @@ package tiger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -9,13 +10,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import tiger.filter.VerifyCodeFilter;
 import tiger.service.CustomUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +49,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return jdbcTokenRepository;
     }
 
+
+    public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler(){
+        DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
+        handler.setPermissionEvaluator(new CustomPermissionEvaluator());
+        return handler;
+    }
+
+    @Override
+    public void init(WebSecurity web) throws Exception {
+        super.init(web);
+        web.expressionHandler(webSecurityExpressionHandler());
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
