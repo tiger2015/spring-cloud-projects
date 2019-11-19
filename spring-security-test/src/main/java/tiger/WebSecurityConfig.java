@@ -14,6 +14,8 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import tiger.handler.CustomAuthenticationFailureHandler;
+import tiger.handler.CustomAuthenticationSuccessHandler;
 import tiger.service.CustomUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +43,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
+
+
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    private CustomAuthenticationFailureHandler authenticationFailureHandler;
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -74,8 +84,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/getVerifyCode").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
-                .failureUrl("/login/error")
+               // .and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
+               // .failureUrl("/login/error")
+                .and().formLogin().loginPage("/login").permitAll()
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler)
                 .authenticationDetailsSource(authenticationDetailsSource)
                 .and()
                // .addFilterBefore(new VerifyCodeFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -84,7 +97,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(60)
-                .userDetailsService(userDetailsService); // 自动登录
+                .userDetailsService(userDetailsService).and()// 自动登录
+                .sessionManagement().invalidSessionUrl("/invalid").maximumSessions(1).maxSessionsPreventsLogin(false);
         http.csrf().disable();
     }
 
