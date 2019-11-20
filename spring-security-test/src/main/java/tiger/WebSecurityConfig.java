@@ -91,8 +91,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/getVerifyCode")
-                .permitAll()
+                .antMatchers("/getVerifyCode") // 验证码
+                .permitAll() // 允许全部请求
                 .anyRequest()
                 .authenticated()
                // .and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
@@ -116,12 +116,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(60)
                 .userDetailsService(userDetailsService)// 自动登录
                 .and()
-                .sessionManagement()
-                .invalidSessionUrl("/invalid")
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(false)
-                .expiredSessionStrategy(new CustomExpiredSessionStrategy())
-                .sessionRegistry(sessionRegistry());
+                .sessionManagement() // 开启session管理
+                .invalidSessionUrl("/invalid") //session过期跳转URL
+                .maximumSessions(1) // 最大sessions数目
+                .maxSessionsPreventsLogin(false)//当达到最大session数时是否保留已经登录的用户
+                .expiredSessionStrategy(new CustomExpiredSessionStrategy())// 当达到最大值，旧用户被踢出的操作
+                .sessionRegistry(sessionRegistry());  // session注册策略
+        // 关闭CSRF跨域访问
         http.csrf().disable();
     }
 
