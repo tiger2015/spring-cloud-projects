@@ -10,12 +10,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import tiger.handler.CustomAuthenticationFailureHandler;
 import tiger.handler.CustomAuthenticationSuccessHandler;
+import tiger.handler.CustomLogoutSuccessHandler;
 import tiger.service.CustomUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,13 +47,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
 
-
-
     @Autowired
     private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
     private CustomAuthenticationFailureHandler authenticationFailureHandler;
+
+    @Autowired
+    private CustomLogoutSuccessHandler logoutSuccessHandler;
+
+    @Bean
+    public SessionRegistry sessionRegistry(){
+        return new SessionRegistryImpl();
+    }
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -82,23 +91,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/getVerifyCode").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/getVerifyCode")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                // .and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
                // .failureUrl("/login/error")
-                .and().formLogin().loginPage("/login").permitAll()
-                .successHandler(authenticationSuccessHandler)
-                .failureHandler(authenticationFailureHandler)
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .successHandler(authenticationSuccessHandler)// 登录成功的处理
+                .failureHandler(authenticationFailureHandler)// 登录失败的处理
                 .authenticationDetailsSource(authenticationDetailsSource)
                 .and()
                // .addFilterBefore(new VerifyCodeFilter(), UsernamePasswordAuthenticationFilter.class)
-                .logout().permitAll()
+                .logout()
+                .deleteCookies("JSESSIONID") // 退出时清除浏览器的cookie
+                .logoutSuccessHandler(logoutSuccessHandler) // 退出成功时的处理器
+                .permitAll()
                 .and()
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(60)
-                .userDetailsService(userDetailsService).and()// 自动登录
-                .sessionManagement().invalidSessionUrl("/invalid").maximumSessions(1).maxSessionsPreventsLogin(false);
+                .userDetailsService(userDetailsService)// 自动登录
+                .and()
+                .sessionManagement()
+                .invalidSessionUrl("/invalid")
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false)
+                .expiredSessionStrategy(new CustomExpiredSessionStrategy())
+                .sessionRegistry(sessionRegistry());
         http.csrf().disable();
     }
 
