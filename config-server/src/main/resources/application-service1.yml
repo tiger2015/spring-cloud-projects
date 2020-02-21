@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /test
+spring:
+  cloud:
+    consul:
+      host: 192.168.100.110
+      port: 8530
+      discovery:
+        service-name: service-provider
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        prefer-ip-address: true
+        health-check-interval: 3s
+        health-check-timeout: 3s
+        health-check-critical-timeout: 3s # 自动删除服务
+  application:
+    name: service
+
+msg:
+   hello: service1
+logging:
+  config: classpath:log4j2-service1.xml

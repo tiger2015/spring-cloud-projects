@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>tiger</groupId>
-    <artifactId>spring-boot-projects</artifactId>
+    <artifactId>spring-cloud-projects</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
@@ -14,10 +14,9 @@
         <module>service-consumer</module>
         <module>config-server</module>
         <module>privilege-manager</module>
-        <module>spring-security-test</module>
     </modules>
 
-    <name>spring-boot-projects</name>
+    <name>spring-cloud-projects</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -39,7 +38,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>

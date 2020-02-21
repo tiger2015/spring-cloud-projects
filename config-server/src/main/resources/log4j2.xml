@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="dir" value="./log/consul-service"/>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="debugFileAppender" fileName="${dir}/debug.log" filePattern="${dir}/debug-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <Filters>
+                <!-- 优先配置级别高的，顺序不能颠倒 -->
+                <ThresholdFilter level="INFO" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+       <RollingFile name="infoFileAppender" fileName="${dir}/info.log" filePattern="${dir}/info-%d{yyyy-MM-dd-HH}.log.gz">
+           <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+           <Policies>
+               <TimeBasedTriggeringPolicy />
+           </Policies>
+           <Filters>
+               <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+               <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+           </Filters>
+       </RollingFile>
+        <RollingFile name="warnFileAppender" fileName="${dir}/warn.log" filePattern="${dir}/warn-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+        <RollingFile name="errorFileAppender" fileName="${dir}/error.log" filePattern="${dir}/error-%d{yyyy-MM-dd-HH}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="debugFileAppender"/>
+            <AppenderRef ref="infoFileAppender"/>
+            <AppenderRef ref="warnFileAppender"/>
+            <AppenderRef ref="errorFileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
